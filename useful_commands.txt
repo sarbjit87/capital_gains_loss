@@ -1,0 +1,11 @@
+FLASK_APP = capital_gains_loss
+
+flask db init
+
+flask db upgrade
+
+flask db migrate
+
+Transaction.query.with_entities(Transaction.security_name).distinct().all()
+
+Transaction.query.filter_by(security_name='ABC').all()

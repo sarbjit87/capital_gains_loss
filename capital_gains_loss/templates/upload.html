@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="col">
+    <h1>Upload CSV file</h1>
+    <hr>
+    <form action="/uploadcsv" method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+          <label>Select image</label>
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" name="image" id="image">
+            <label class="custom-file-label" for="image">Select csv file ...</label>
+          </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+</div>
+{% endblock content %}

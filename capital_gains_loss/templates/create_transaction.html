@@ -1,0 +1,139 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">{{ legend }}</legend>
+            <div class="form-group">
+                {{ form.security_name.label(class="form-control-label") }}
+                {% if form.security_name.errors %}
+                    {{ form.security_name(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.security_name.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.security_name(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.security_details.label(class="form-control-label") }}
+                {% if form.security_details.errors %}
+                    {{ form.security_details(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.security_details.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.security_details(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.transaction_date.label(class="form-control-label") }}
+                {% if form.transaction_date.errors %}
+                    {{ form.transaction_date(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback"  style="display:block">
+                        {% for error in form.transaction_date.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.transaction_date(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    $('#datepicker1').datetimepicker();
+                })
+            </script>
+
+
+            <div class="form-group">
+                {{ form.transaction_type.label(class="form-control-label") }}
+                {% if form.transaction_type.errors %}
+                    {{ form.transaction_type(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.transaction_type.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.transaction_type(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.quantity.label(class="form-control-label") }}
+                {% if form.quantity.errors %}
+                    {{ form.quantity(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.quantity.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.quantity(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.price_per_share.label(class="form-control-label") }}
+                {% if form.price_per_share.errors %}
+                    {{ form.price_per_share(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.price_per_share.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.price_per_share(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.fees.label(class="form-control-label") }}
+                {% if form.fees.errors %}
+                    {{ form.fees(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.fees.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.fees(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.forex_rate.label(class="form-control-label") }}
+                {% if form.forex_rate.errors %}
+                    {{ form.forex_rate(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.forex_rate.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.forex_rate(class="form-control form-control-lg") }}
+                {% endif %}
+
+            </div>
+
+            <span>
+              <button type="button" class="btn btn-outline-success float-right" id="forex-button">Autofind forex rate : USD->CAD</button>
+            </span>
+
+
+
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+{% endblock content %}
