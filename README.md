@@ -1,6 +1,6 @@
 Calculate Capital Gains/Loss for Canadian Taxes including Adjusted Cost Base using an interactive web-application implemented using FLASK (Python)
 
-** Features **
+**Features**
 
 - Simple UI to add Buy/Sell transactions
 - Add commission, forex charges etc
@@ -9,7 +9,7 @@ Calculate Capital Gains/Loss for Canadian Taxes including Adjusted Cost Base usi
 - Download the data as CSV
 - Upload existing data from CSV
 
-** Setup **
+**Setup**
 
 `git clone https://github.com/sarbjit87/capital_gains_loss.git`
 
