@@ -10,7 +10,6 @@ def calculate_acb(symbol):
     previous_record = None
     total_shares = 0
     for transaction in transactions:
-        #[Previous Total ACB] + ([Share Price] x [Number of Shares Purchased]) + [Transaction Costs]
         if previous_record is None:
             previous_acb = 0
         else:
@@ -18,7 +17,7 @@ def calculate_acb(symbol):
 
         if transaction.transaction_type.lower() == "buy":
             #BUY Transaction
-            if transaction.forex_rate != '0.0':
+            if transaction.forex_rate != Decimal(0):
                 transaction.acb = previous_acb + (transaction.quantity * transaction.price_per_share * transaction.forex_rate) + (transaction.fees * transaction.forex_rate)
             else:
                 transaction.acb = previous_acb + (transaction.quantity * transaction.price_per_share) + transaction.fees
@@ -26,12 +25,10 @@ def calculate_acb(symbol):
             total_shares = total_shares + transaction.quantity
         else:
             #SELL Transaction
-            acb_sell = (previous_acb * transaction.quantity) / total_shares
+            acb_sell = ((previous_acb /total_shares) * transaction.quantity)
             transaction.acb = previous_acb * Decimal(((total_shares - transaction.quantity) / total_shares))
-            #transaction.acb = transaction.acb - acb_sell
 
-            if transaction.forex_rate != '0.0':
-                print("DEBUGGGG")
+            if transaction.forex_rate != Decimal(0):
                 transaction.gain_loss = (transaction.quantity * transaction.price_per_share * transaction.forex_rate) - acb_sell - (transaction.fees * transaction.forex_rate)
                 #transaction.gain_loss = ((transaction.quantity * transaction.price_per_share * transaction.forex_rate) - (transaction.fees * transaction.forex_rate)) - ((transaction.acb/total_shares) * transaction.quantity)
             else:
@@ -56,8 +53,7 @@ def home():
         symbol = request.args.get('symbol', symbols[0])
         transactions = Transaction.query.filter_by(security_name=symbol).order_by(Transaction.transaction_date.desc()).paginate(page=page, per_page=10)
         calculate_acb(symbol)
-    #page = request.args.get('page', 1, type=int)
-    #transactions = Transaction.query.order_by(Transaction.transaction_date.desc()).paginate(page=page, per_page=10)
+        
     return render_template('home.html', transactions=transactions,symbols=symbols, symbol=symbol)
 
 @main.route("/about")

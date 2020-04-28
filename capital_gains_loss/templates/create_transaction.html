@@ -107,6 +107,39 @@
                 {% else %}
                     {{ form.fees(class="form-control form-control-lg") }}
                 {% endif %}
+
+            <div class="col mt-1">
+              <span style="color:green" id="fees_amount"></span>
+            </div>
+
+            </div>
+
+            <div class="form-group">
+                {{ form.amount_recieved.label(class="form-control-label") }}
+                {% if form.amount_recieved.errors %}
+                    {{ form.amount_recieved(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.amount_recieved.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.amount_recieved(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.amount_recieved_details.label(class="form-control-label") }}
+                {% if form.amount_recieved_details.errors %}
+                    {{ form.amount_recieved_details(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.amount_recieved_details.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.amount_recieved_details(class="form-control form-control-lg") }}
+                {% endif %}
             </div>
 
             <div class="form-group">
@@ -121,14 +154,18 @@
                 {% else %}
                     {{ form.forex_rate(class="form-control form-control-lg") }}
                 {% endif %}
-
             </div>
 
-            <span>
-              <button type="button" class="btn btn-outline-success float-right" id="forex-button">Autofind forex rate : USD->CAD</button>
-            </span>
+            <div class="form-group">
+              <span>
+                <button type="button" class="btn btn-outline-success float-right mr-2" id="forex-button">Autofind forex rate : USD->CAD</button>
+              </span>
 
+              <span>
+                <button type="button" class="btn btn-outline-success float-right mr-2" id="commission-button">Find Commission</button>
+              </span>
 
+            </div>
 
         </fieldset>
         <div class="form-group">

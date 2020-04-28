@@ -95,6 +95,21 @@
 			  });
 			});
 
+      $(function() {
+        $('#commission-button').bind('click', function() {
+        $.getJSON('/commission', {
+          fees: $("#fees").val(),
+          forex_rate: $("#forex_rate").val(),
+          price_per_share: $("#price_per_share").val(),
+          quantity: $("#quantity").val(),
+          amount_recieved: $("#amount_recieved").val(),
+        }, function(data) {
+          $("#fees_amount").text("Updated commission including existing fees is : " + data.result);
+        });
+        return false;
+        });
+      });
+
     </script>
 </body>
 </html>

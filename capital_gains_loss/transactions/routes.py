@@ -9,6 +9,7 @@ import requests
 import io
 import csv
 from capital_gains_loss.config import Config
+from decimal import Decimal
 
 transactions = Blueprint('transactions', __name__)
 
@@ -26,6 +27,8 @@ def new_transaction():
                                   price_per_share=form.price_per_share.data,
                                   fees=form.fees.data,
                                   forex_rate=form.forex_rate.data,
+                                  amount_recieved=form.amount_recieved,
+                                  amount_recieved_details=form.amount_recieved_details,
                                   author=current_user)
         db.session.add(transaction)
         db.session.commit()
@@ -56,6 +59,8 @@ def update_transaction(transaction_id):
         transaction.fees = form.fees.data
         transaction.forex_rate = form.forex_rate.data
         transaction.transaction_date = datetime.datetime.strptime(form.transaction_date.data, '%m/%d/%Y %I:%M %p')
+        transaction.amount_recieved = form.amount_recieved.data
+        transaction.amount_recieved_details = form.amount_recieved_details.data
         db.session.commit()
         flash('Transaction has been updated!', 'success')
         return redirect(url_for('main.home'))
@@ -69,6 +74,8 @@ def update_transaction(transaction_id):
         form.forex_rate.data = transaction.forex_rate
         form.transaction_date.data = datetime.datetime.strftime(transaction.transaction_date, '%m/%d/%Y %I:%M %p')
         form.submit.label.text = "Update Transaction"
+        form.amount_recieved_details.data = transaction.amount_recieved_details
+        form.amount_recieved.data = transaction.amount_recieved
     return render_template('create_transaction.html', title='Update Transaction',
                            form=form, legend='Update Transaction')
 
@@ -96,6 +103,37 @@ def find_forex_rate():
         res = r.json()
         forex = res['observations'][0]['FXUSDCAD']['v']
         return jsonify(result=forex)
+    except Exception as e:
+        print(e)
+        return str(e)
+
+@transactions.route('/commission', methods=['GET'])
+@login_required
+def find_commission():
+    try:
+        quantity = Decimal(request.args.get('quantity',0))
+        forex_rate = Decimal(request.args.get('forex_rate',0))
+        fees = Decimal(request.args.get('fees',0,type=str))
+        amount_recieved = Decimal(request.args.get('amount_recieved',0))
+        price_per_share = Decimal(request.args.get('price_per_share',0))
+
+        if forex_rate != Decimal(0):
+            amount = (quantity * price_per_share * forex_rate) - (fees * forex_rate)
+        else:
+            amount = (quantity * price_per_share) - fees
+
+        difference =  amount - amount_recieved
+
+        if forex_rate != Decimal(0):
+            fees = fees + difference/forex_rate
+        else:
+            fees = fees + difference
+
+        print("DEBUG IN COMMISSION : Amount : %f , difference : %f, FEES: %f" %(amount,difference, fees))
+
+        fees = round(fees,2)
+
+        return jsonify(result=str(fees))
     except Exception as e:
         print(e)
         return str(e)
@@ -178,6 +216,8 @@ def upload_csv():
                                           price_per_share=r['price_per_share'],
                                           fees=r['fees'],
                                           forex_rate=r['forex_rate'],
+                                          amount_recieved=r['amount_recieved'],
+                                          amount_recieved_details=r['amount_recieved_details'],
                                           author=current_user)
                 db.session.add(transaction)
                 db.session.commit()

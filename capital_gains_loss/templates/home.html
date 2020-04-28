@@ -1,28 +1,19 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Available Symbols</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for sym in symbols %}
-      {% if sym == symbol %}
-        <tr class="table-info">
-          <td><a href="{{ url_for('main.home', symbol=sym) }}">{{ sym }}</a></td>
-        </tr>
-      {% else %}
-        <tr>
-          <td><a href="{{ url_for('main.home', symbol=sym) }}">{{ sym }}</a></td>
-        </tr>
+<div class="row">
+  <div class="col-md-12">
+    <h4>Available Symbols</h4>
+  </div>
+  {% for sym in symbols %}
+    {% if sym == symbol %}
+      <a class="btn btn-info mb-4 mr-2" href="{{ url_for('main.home', symbol=sym) }}">{{ sym }}</a>
+    {% else %}
+      <a class="btn btn-outline-info mb-4 mr-2" href="{{ url_for('main.home', symbol=sym) }}">{{ sym }}</a>
       {% endif %}
     {% endfor %}
-  </tbody>
-</table>
-
-
+</div>
+<hr>
 
 <a href="{{ url_for('transactions.new_transaction') }}">
   <button type="button" class="btn btn-sm btn-primary btn-create">New Transaction</button>

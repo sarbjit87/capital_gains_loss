@@ -40,6 +40,8 @@ class TransactionForm(FlaskForm):
     quantity = IntegerField('Number of Shares', validators=[DataRequired()])
     price_per_share = DecimalField('Price per Share', validators=[DataRequired()])
     fees = DecimalField('Commission/Brokerage Fees', validators=[Optional()])
+    amount_recieved = DecimalField('Amount Recieved (Optional)', validators=[Optional()])
+    amount_recieved_details = StringField('Amount Recieved Details (Optional)', validators=[])
     forex_rate = DecimalField('Forex Rate, if in foreign currency (will be used for both shares and fees)',places=4, validators=[Optional()])
     submit = SubmitField('Add Transaction')
 
