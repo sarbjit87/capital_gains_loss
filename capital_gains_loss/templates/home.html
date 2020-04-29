@@ -88,7 +88,7 @@
     {% endfor %}
   </tbody>
 </table>
-
+ {% if transactions %}
   {% for page_num in transactions.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
       {% if page_num %}
         {% if transactions.page == page_num %}
@@ -100,4 +100,5 @@
         ...
       {% endif %}
   {% endfor %}
+  {% endif %}
 {% endblock content %}

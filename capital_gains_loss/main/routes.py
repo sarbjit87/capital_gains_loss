@@ -1,4 +1,5 @@
 from flask import render_template, request, Blueprint
+from flask_login import current_user, login_required
 from capital_gains_loss.models import Transaction
 from capital_gains_loss import db
 from decimal import Decimal
@@ -6,7 +7,7 @@ from decimal import Decimal
 main = Blueprint('main', __name__)
 
 def calculate_acb(symbol):
-    transactions = Transaction.query.filter_by(security_name=symbol).order_by(Transaction.transaction_date.asc())
+    transactions = Transaction.query.filter_by(security_name=symbol,author=current_user).order_by(Transaction.transaction_date.asc())
     previous_record = None
     total_shares = 0
     for transaction in transactions:
@@ -43,17 +44,21 @@ def calculate_acb(symbol):
 
 @main.route("/")
 @main.route("/home")
+@login_required
 def home():
-    symbols = Transaction.query.with_entities(Transaction.security_name).distinct().all()
+    symbols = Transaction.query.filter_by(author=current_user).with_entities(Transaction.security_name).distinct().all()
     symbols = [value for value, in symbols]
     symbol = ""
-    transactions = {}
+    #transactions = ""
     if len(symbols) > 0:
         page = request.args.get('page', 1, type=int)
         symbol = request.args.get('symbol', symbols[0])
-        transactions = Transaction.query.filter_by(security_name=symbol).order_by(Transaction.transaction_date.desc()).paginate(page=page, per_page=10)
-        calculate_acb(symbol)
-        
+        transactions = Transaction.query.filter_by(security_name=symbol,author=current_user).order_by(Transaction.transaction_date.desc()).paginate(page=page, per_page=10)
+    else:
+        transactions = Transaction.query.filter_by(author=current_user).all()
+
+    calculate_acb(symbol)
+
     return render_template('home.html', transactions=transactions,symbols=symbols, symbol=symbol)
 
 @main.route("/about")

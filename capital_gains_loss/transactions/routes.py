@@ -27,8 +27,8 @@ def new_transaction():
                                   price_per_share=form.price_per_share.data,
                                   fees=form.fees.data,
                                   forex_rate=form.forex_rate.data,
-                                  amount_recieved=form.amount_recieved,
-                                  amount_recieved_details=form.amount_recieved_details,
+                                  amount_recieved=form.amount_recieved.data,
+                                  amount_recieved_details=form.amount_recieved_details.data,
                                   author=current_user)
         db.session.add(transaction)
         db.session.commit()
@@ -91,6 +91,13 @@ def delete_transaction(transaction_id):
     flash('Your transaction has been deleted!', 'success')
     return redirect(url_for('main.home'))
 
+@transactions.route("/transaction/<symbol_id>/delete", methods=['GET'])
+@login_required
+def delete_all_transaction(symbol_id):
+    transaction = Transaction.query.filter_by(security_name=symbol_id,author=current_user).delete()
+    db.session.commit()
+    flash('All transactions has been deleted for symbol %s!' %(symbol_id), 'success')
+    return redirect(url_for('main.home'))
 
 @transactions.route('/forex', methods=['GET'])
 @login_required
@@ -141,7 +148,7 @@ def find_commission():
 @transactions.route('/downloadcsv/')
 @login_required
 def download_csv():
-    transactions = Transaction.query.order_by(Transaction.transaction_date.desc())
+    transactions = Transaction.query.filter_by(author=current_user).order_by(Transaction.transaction_date.desc())
     output = io.StringIO()
     writer = csv.writer(output)
     list_items = ['id', 'security_name', 'security_details', 'transaction_date', 'transaction_type',\
@@ -216,8 +223,8 @@ def upload_csv():
                                           price_per_share=r['price_per_share'],
                                           fees=r['fees'],
                                           forex_rate=r['forex_rate'],
-                                          amount_recieved=r['amount_recieved'],
-                                          amount_recieved_details=r['amount_recieved_details'],
+                                          amount_recieved=r.get('amount_recieved'),
+                                          amount_recieved_details=r.get('amount_recieved_details'),
                                           author=current_user)
                 db.session.add(transaction)
                 db.session.commit()
