@@ -80,6 +80,13 @@ def update_transaction(transaction_id):
                            form=form, legend='Update Transaction')
 
 
+@transactions.route("/transaction/schedule3report", methods=['GET'])
+@login_required
+def schedule3_report():
+    transactions = Transaction.query.filter(Transaction.gain_loss!=Decimal(0),Transaction.author==current_user).order_by(Transaction.transaction_date.desc()).all()
+    return render_template('report.html', transactions=transactions)
+
+
 @transactions.route("/transaction/<int:transaction_id>/delete", methods=['POST'])
 @login_required
 def delete_transaction(transaction_id):
@@ -91,6 +98,7 @@ def delete_transaction(transaction_id):
     flash('Your transaction has been deleted!', 'success')
     return redirect(url_for('main.home'))
 
+
 @transactions.route("/transaction/<symbol_id>/delete", methods=['GET'])
 @login_required
 def delete_all_transaction(symbol_id):
@@ -98,6 +106,7 @@ def delete_all_transaction(symbol_id):
     db.session.commit()
     flash('All transactions has been deleted for symbol %s!' %(symbol_id), 'success')
     return redirect(url_for('main.home'))
+
 
 @transactions.route('/forex', methods=['GET'])
 @login_required

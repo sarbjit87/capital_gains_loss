@@ -19,10 +19,14 @@ def calculate_acb(symbol):
         if transaction.transaction_type.lower() == "buy":
             #BUY Transaction
             if transaction.forex_rate != Decimal(0):
-                transaction.acb = previous_acb + (transaction.quantity * transaction.price_per_share * transaction.forex_rate) + (transaction.fees * transaction.forex_rate)
+                amount_in_cad = (transaction.quantity * transaction.price_per_share * transaction.forex_rate)
+                transaction.acb = previous_acb + amount_in_cad + (transaction.fees * transaction.forex_rate)
             else:
-                transaction.acb = previous_acb + (transaction.quantity * transaction.price_per_share) + transaction.fees
+                amount_in_cad = (transaction.quantity * transaction.price_per_share)
+                transaction.acb = previous_acb + amount_in_cad + transaction.fees
 
+            transaction.amount_in_cad = amount_in_cad
+            transaction.acb_change = transaction.acb - previous_acb
             total_shares = total_shares + transaction.quantity
         else:
             #SELL Transaction
@@ -30,12 +34,16 @@ def calculate_acb(symbol):
             transaction.acb = previous_acb * Decimal(((total_shares - transaction.quantity) / total_shares))
 
             if transaction.forex_rate != Decimal(0):
-                transaction.gain_loss = (transaction.quantity * transaction.price_per_share * transaction.forex_rate) - acb_sell - (transaction.fees * transaction.forex_rate)
+                amount_in_cad = (transaction.quantity * transaction.price_per_share * transaction.forex_rate)
+                transaction.gain_loss = amount_in_cad - (transaction.fees * transaction.forex_rate) - acb_sell
                 #transaction.gain_loss = ((transaction.quantity * transaction.price_per_share * transaction.forex_rate) - (transaction.fees * transaction.forex_rate)) - ((transaction.acb/total_shares) * transaction.quantity)
             else:
-                transaction.gain_loss = (transaction.quantity * transaction.price_per_share) - acb_sell - (transaction.fees)
+                amount_in_cad = (transaction.quantity * transaction.price_per_share)
+                transaction.gain_loss = amount_in_cad - (transaction.fees) - acb_sell
                 #transaction.gain_loss = (transaction.quantity * transaction.price_per_share) - transaction.fees - transaction.acb
 
+            transaction.amount_in_cad = amount_in_cad
+            transaction.acb_change = transaction.acb - previous_acb
             total_shares = total_shares - transaction.quantity
 
         db.session.commit()
@@ -49,7 +57,7 @@ def home():
     symbols = Transaction.query.filter_by(author=current_user).with_entities(Transaction.security_name).distinct().all()
     symbols = [value for value, in symbols]
     symbol = ""
-    #transactions = ""
+    
     if len(symbols) > 0:
         page = request.args.get('page', 1, type=int)
         symbol = request.args.get('symbol', symbols[0])

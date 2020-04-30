@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class="row">
+<div class="row ml-4">
   <div class="col-md-12">
     <h4>Available Symbols</h4>
   </div>
@@ -15,20 +15,28 @@
 </div>
 <hr>
 
-<a href="{{ url_for('transactions.new_transaction') }}">
-  <button type="button" class="btn btn-sm btn-primary btn-create">New Transaction</button>
-</a>
-<span>
-<a class="float-right" href="{{ url_for('transactions.upload_csv') }}">
-  <button type="button" class="btn btn-sm btn-primary btn-create btn-warning mr-1">Upload CSV</button>
-</a>
-</span>
-<span>
-<a class="float-right" href="{{ url_for('transactions.download_csv') }}">
-  <button type="button" class="btn btn-sm btn-primary btn-create btn-warning mr-2">Download CSV</button>
-</a>
-</span>
-<br />
+<div class="ml-4">
+    <span>
+      <a href="{{ url_for('transactions.new_transaction') }}">
+        <button type="button" class="btn btn-sm btn-primary btn-create">New Transaction</button>
+      </a>
+      <a href="{{ url_for('transactions.delete_all_transaction', symbol_id=symbol) }}">
+        <button type="button" class="ml-2 btn btn-sm btn-primary btn-danger btn-create">Delete All</button>
+      </a>
+    </span>
+    <span class="mr-4">
+      <a class="float-right" href="{{ url_for('transactions.upload_csv') }}">
+        <button type="button" class="btn btn-sm btn-primary btn-create btn-warning mr-1">Upload CSV</button>
+      </a>
+      <a class="float-right" href="{{ url_for('transactions.download_csv') }}">
+        <button type="button" class="btn btn-sm btn-primary btn-create btn-warning mr-2">Download CSV</button>
+      </a>
+      <a class="float-right" href="{{ url_for('transactions.schedule3_report') }}">
+        <button type="button" class="btn btn-sm btn-primary btn-create btn-warning mr-2">Schedule3 Report</button>
+      </a>
+    </span>
+</div>
+
 <table class="table table-hover" style="margin:20px;">
   <thead>
     <tr>
@@ -38,7 +46,9 @@
       <th scope="col">Quantity</th>
       <th scope="col">Price/Share</th>
       <th scope="col">Fees</th>
+      <th scope="col">Amount (CAD)</th>
       <th scope="col">ACB</th>
+      <th scope="col">Change in ACB</th>
       <th scope="col">Gain/Loss</th>
     </tr>
   </thead>
@@ -51,7 +61,9 @@
         <td>{{ transaction.quantity }}</td>
         <td>{{ transaction.price_per_share }}</td>
         <td>{{ transaction.fees }}</td>
+        <td>{{ transaction.amount_in_cad }}</td>
         <td>{{ transaction.acb }}</td>
+        <td>{{ transaction.acb_change }}</td>
         <td>{{ transaction.gain_loss }}</td>
         <td>
           <a href="{{ url_for('transactions.update_transaction', transaction_id=transaction.id) }}">
@@ -88,17 +100,19 @@
     {% endfor %}
   </tbody>
 </table>
- {% if transactions %}
-  {% for page_num in transactions.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-      {% if page_num %}
-        {% if transactions.page == page_num %}
-          <a class="btn btn-info mb-4" href="{{ url_for('main.home', page=page_num, symbol=symbol) }}">{{ page_num }}</a>
+<div class="ml-4">
+   {% if transactions %}
+    {% for page_num in transactions.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+        {% if page_num %}
+          {% if transactions.page == page_num %}
+            <a class="btn btn-info mb-4" href="{{ url_for('main.home', page=page_num, symbol=symbol) }}">{{ page_num }}</a>
+          {% else %}
+            <a class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page=page_num, symbol=symbol) }}">{{ page_num }}</a>
+          {% endif %}
         {% else %}
-          <a class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page=page_num, symbol=symbol) }}">{{ page_num }}</a>
+          ...
         {% endif %}
-      {% else %}
-        ...
-      {% endif %}
-  {% endfor %}
-  {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
 {% endblock content %}
