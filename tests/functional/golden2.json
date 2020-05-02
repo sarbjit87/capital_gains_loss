@@ -1,0 +1,112 @@
+{
+  "1": {
+    "acb": "5010.00",
+    "acb_change": "5010.00",
+    "amount_in_cad": "5000.00",
+    "author": "user1",
+    "gain_loss": "0.00",
+    "security_name": "ABC_STOCK",
+    "transaction_date": "2020-09-30 09:00:00",
+    "transaction_type": "buy"
+  },
+  "2": {
+    "acb": "5019.99",
+    "acb_change": "5019.99",
+    "amount_in_cad": "5000.00",
+    "author": "user2",
+    "gain_loss": "0.00",
+    "security_name": "ABCD_STOCK",
+    "transaction_date": "2020-01-30 09:00:00",
+    "transaction_type": "buy"
+  },
+  "3": {
+    "acb": "2509.99",
+    "acb_change": "-2509.99",
+    "amount_in_cad": "6000.00",
+    "author": "user2",
+    "gain_loss": "3480.01",
+    "security_name": "ABCD_STOCK",
+    "transaction_date": "2020-02-20 09:00:00",
+    "transaction_type": "sell"
+  },
+  "4": {
+    "acb": "9019.99",
+    "acb_change": "6510.00",
+    "amount_in_cad": "6500.00",
+    "author": "user2",
+    "gain_loss": "0.00",
+    "security_name": "ABCD_STOCK",
+    "transaction_date": "2020-03-30 09:00:00",
+    "transaction_type": "buy"
+  },
+  "5": {
+    "acb": "5411.99",
+    "acb_change": "-3608.00",
+    "amount_in_cad": "3600.00",
+    "author": "user2",
+    "gain_loss": "-18.00",
+    "security_name": "ABCD_STOCK",
+    "transaction_date": "2020-09-30 09:00:00",
+    "transaction_type": "sell"
+  },
+  "6": {
+    "acb": "5409.00",
+    "acb_change": "-3606.00",
+    "amount_in_cad": "3600.00",
+    "author": "user2",
+    "gain_loss": "-16.00",
+    "security_name": "ABC",
+    "transaction_date": "2020-09-11 09:00:00",
+    "transaction_type": "sell"
+  },
+  "7": {
+    "acb": "0.00",
+    "acb_change": "0.00",
+    "amount_in_cad": "0.00",
+    "author": "user2",
+    "gain_loss": "0.00",
+    "security_name": "DEF",
+    "transaction_date": "2020-08-13 09:24:00",
+    "transaction_type": "sell"
+  },
+  "8": {
+    "acb": "9015.00",
+    "acb_change": "6510.00",
+    "amount_in_cad": "6500.00",
+    "author": "user2",
+    "gain_loss": "0.00",
+    "security_name": "ABC",
+    "transaction_date": "2020-07-15 08:59:00",
+    "transaction_type": "buy"
+  },
+  "9": {
+    "acb": "2505.00",
+    "acb_change": "-2505.00",
+    "amount_in_cad": "6000.00",
+    "author": "user2",
+    "gain_loss": "3485.00",
+    "security_name": "ABC",
+    "transaction_date": "2020-05-01 08:59:00",
+    "transaction_type": "sell"
+  },
+  "10": {
+    "acb": "0.00",
+    "acb_change": "0.00",
+    "amount_in_cad": "0.00",
+    "author": "user2",
+    "gain_loss": "0.00",
+    "security_name": "DEF",
+    "transaction_date": "2020-04-01 09:21:00",
+    "transaction_type": "buy"
+  },
+  "11": {
+    "acb": "5010.00",
+    "acb_change": "5010.00",
+    "amount_in_cad": "5000.00",
+    "author": "user2",
+    "gain_loss": "0.00",
+    "security_name": "ABC",
+    "transaction_date": "2020-03-03 08:58:00",
+    "transaction_type": "buy"
+  }
+}

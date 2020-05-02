@@ -1,6 +1,8 @@
 migrations/
 app.db
 testapp.db
+result1.json
+result2.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

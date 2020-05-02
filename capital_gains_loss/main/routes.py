@@ -56,8 +56,9 @@ def calculate_acb(symbol):
 def home():
     symbols = Transaction.query.filter_by(author=current_user).with_entities(Transaction.security_name).distinct().all()
     symbols = [value for value, in symbols]
+    symbols.sort()
     symbol = ""
-    
+
     if len(symbols) > 0:
         page = request.args.get('page', 1, type=int)
         symbol = request.args.get('symbol', symbols[0])

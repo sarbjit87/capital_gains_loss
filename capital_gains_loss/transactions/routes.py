@@ -161,7 +161,8 @@ def download_csv():
     output = io.StringIO()
     writer = csv.writer(output)
     list_items = ['id', 'security_name', 'security_details', 'transaction_date', 'transaction_type',\
-                  'quantity', 'price_per_share', 'fees', 'forex_rate', 'acb', 'gain_loss']
+                  'quantity', 'price_per_share', 'fees', 'forex_rate', 'acb', 'gain_loss', 'amount_recieved',\
+                  'amount_recieved_details', 'amount_in_cad', 'acb_change']
     line = ''
     for x in list_items:
         line = line + x + ','
@@ -177,8 +178,10 @@ def download_csv():
         line = line.rstrip(',')
         writer.writerow([line])
 
+    filedt = datetime.datetime.utcnow().strftime('%m_%d_%Y')
     output.seek(0)
-    return Response(output, mimetype="text/csv", headers={"Content-Disposition":"attachment;filename=export.csv"})
+
+    return Response(output, mimetype="text/csv", headers={"Content-Disposition":"attachment;filename=export_%s.csv" %(filedt)})
 
 def allowed_file(filename):
     if not "." in filename:
@@ -196,7 +199,7 @@ def allowed_file(filename):
 def upload_csv():
     if request.method == "POST":
         if request.files:
-            csvfile1 = request.files["image"]
+            csvfile1 = request.files["csvfile"]
 
             if csvfile1.filename == "":
                 flash('No file provided!', 'danger')
