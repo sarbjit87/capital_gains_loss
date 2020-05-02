@@ -1,7 +1,0 @@
-flask
-flask-bcrypt
-flask-mail
-flask-sqlalchemy
-flask-wtf
-pillow
-flask-login
