@@ -46,7 +46,7 @@
       <th scope="col">Quantity</th>
       <th scope="col">Price/Share</th>
       <th scope="col">Fees</th>
-      <th scope="col">Amount (CAD)</th>
+      <th scope="col">Amount</th>
       <th scope="col">ACB</th>
       <th scope="col">Change in ACB</th>
       <th scope="col">Gain/Loss</th>
@@ -55,16 +55,16 @@
   <tbody>
     {% for transaction in transactions.items %}
       <tr>
-        <th scope="row">{{ transaction.transaction_date.strftime('%Y-%m-%d') }}</th>
+        <th scope="row">{{ transaction.transaction_date | pretty_date }}</th>
         <td>{{ transaction.security_name }}</td>
-        <td>{{ transaction.transaction_type.upper() }}</td>
+        <td>{{ transaction.transaction_type | upper }}</td>
         <td>{{ transaction.quantity }}</td>
-        <td>{{ transaction.price_per_share }}</td>
-        <td>{{ transaction.fees }}</td>
+        <td>{{ transaction.price_per_share | convert_to_cad(transaction.forex_rate) }}</td>
+        <td>{{ transaction.fees | convert_to_cad(transaction.forex_rate) }}</td>
         <td>{{ transaction.amount_in_cad }}</td>
         <td>{{ transaction.acb }}</td>
         <td>{{ transaction.acb_change }}</td>
-        <td>{{ transaction.gain_loss }}</td>
+        <td>{{ transaction.gain_loss | gain_loss_check(transaction.transaction_type) }}</td>
         <td>
           <a href="{{ url_for('transactions.update_transaction', transaction_id=transaction.id) }}">
             <button type="button" class="btn btn-info btn-sm m-1">Edit</button>

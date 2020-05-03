@@ -28,9 +28,11 @@ def create_app(config_class=Config):
     from capital_gains_loss.transactions.routes import transactions
     from capital_gains_loss.main.routes import main
     from capital_gains_loss.errors.handlers import errors
+    from capital_gains_loss.transactions.filters import filters
     app.register_blueprint(users)
     app.register_blueprint(transactions)
     app.register_blueprint(main)
     app.register_blueprint(errors)
+    app.register_blueprint(filters)
 
     return app

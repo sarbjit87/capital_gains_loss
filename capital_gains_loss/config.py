@@ -1,4 +1,6 @@
 import os
+from datetime import timedelta
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
@@ -12,6 +14,8 @@ class Config:
     MAIL_USERNAME = os.environ.get('EMAIL_USER')
     MAIL_PASSWORD = os.environ.get('EMAIL_PASS')
     CSV_UPLOAD = os.path.join(basedir, 'uploads')
+    PERMANENT_SESSION_LIFETIME = timedelta(minutes=60)
+    SESSION_REFRESH_EACH_REQUEST = True
 
 class TestConfig:
     SECRET_KEY = '13b8184b924cf6f8e31fe7abfd1d3725' #secrets.token_hex(16)

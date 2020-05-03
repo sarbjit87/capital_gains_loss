@@ -158,6 +158,16 @@ def test_file_upload(test_client, init_database, test_with_authenticated_user,mo
     assert golden==current
     assert b"DEF" in response.data
 
+    response1 = test_client.get('/home',
+                                query_string={'symbol': 'DEF'},
+                                follow_redirects=True)
+    data = getDataFromModel(model_access)
+    savejson(data,'tests/functional/result3.json')
+    golden=loadjson('tests/functional/golden3.json')
+    current=loadjson('tests/functional/result3.json')
+    assert b"43.52" in response1.data
+
+
 def test_exchange_api(test_client,test_with_authenticated_user):
     data = { 'trans_date' : '02/11/2020 09:00 AM'}
     response = test_client.get('/forex',

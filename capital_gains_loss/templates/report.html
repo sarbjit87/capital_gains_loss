@@ -20,7 +20,7 @@
         <td>{{ transaction.security_name }}</td>
         <td>{{ transaction.amount_in_cad }}</td>
         <td>{{ transaction.acb_change }}</td>
-        <td>{{ transaction.fees }}</td>
+        <td>{{ transaction.fees | convert_to_cad(transaction.forex_rate)  }}</td>
         <td>{{ transaction.gain_loss }}</td>
       </tr>
     {% endfor %}
