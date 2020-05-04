@@ -173,8 +173,7 @@ def download_csv():
     for transaction in transactions:
         line = ''
         for x in list_items:
-            print(x)
-            line = line + str(getattr(transaction,x)) + ','
+            line = line + '"' + str(getattr(transaction,x)) + '"' + ','
         line = line.rstrip(',')
         writer.writerow([line])
 
@@ -222,7 +221,7 @@ def upload_csv():
                 r = {}
                 for idx, val in enumerate(headers):
                     #print("IDX: %d, VAL: %s" %(idx,val))
-                    r[val] = values[idx]
+                    r[val] = values[idx].strip('"')
                 result.append(r)
 
             for r in result:
