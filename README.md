@@ -1,3 +1,5 @@
+![Python application](https://github.com/sarbjit87/capital_gains_loss/workflows/Python%20application/badge.svg?branch=master)
+
 Calculate Capital Gains/Loss for Canadian Taxes including Adjusted Cost Base using an interactive web-application implemented using FLASK (Python)
 
 **Features**

@@ -37,11 +37,6 @@ def new_transaction():
     return render_template('create_transaction.html', title='New Transaction',
                            form=form, legend='New Transaction')
 
-@transactions.route("/transaction/<int:transaction_id>")
-def transaction(transaction_id):
-    transaction = Transaction.query.get_or_404(transaction_id)
-    return render_template('post.html', title=post.title, transaction=transaction)
-
 
 @transactions.route("/transaction/<int:transaction_id>/update", methods=['GET', 'POST'])
 @login_required
