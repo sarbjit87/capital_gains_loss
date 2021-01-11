@@ -1,4 +1,4 @@
-migrations/
+
 app.db
 testapp.db
 result*.json
