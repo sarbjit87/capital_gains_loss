@@ -21,7 +21,7 @@
         <button type="button" class="btn btn-sm btn-primary btn-create">New Transaction</button>
       </a>
       <a href="{{ url_for('transactions.delete_all_transaction', symbol_id=symbol) }}">
-        <button type="button" class="ml-2 btn btn-sm btn-primary btn-danger btn-create">Delete All</button>
+        <button type="button" class="ml-2 btn btn-sm btn-primary btn-danger btn-create" onclick="return confirm('Do you want to delete all transactions for this symbol?')">Delete All</button>
       </a>
     </span>
     <span class="mr-4">
