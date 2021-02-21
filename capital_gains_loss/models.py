@@ -44,7 +44,7 @@ class Transaction(db.Model):
     quantity = db.Column(db.Integer, nullable=False)
     price_per_share = db.Column(db.Numeric(10,2), nullable=False)
     fees = db.Column(db.Numeric(10,2), nullable=True, default=0.0)
-    forex_rate = db.Column(db.Numeric(precision=4), nullable=True, default=0.0)
+    forex_rate = db.Column(db.Numeric(10,4), nullable=True, default=0.0)
     acb = db.Column(db.Numeric(10,2), nullable=True, default=0.0)
     acb_change = db.Column(db.Numeric(10,2), nullable=True, default=0.0)
     amount_in_cad = db.Column(db.Numeric(10,2), nullable=True, default=0.0)
