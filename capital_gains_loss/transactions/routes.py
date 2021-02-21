@@ -3,7 +3,7 @@ from flask import (render_template, url_for, flash, jsonify,
 from flask_login import current_user, login_required
 from capital_gains_loss import db
 from capital_gains_loss.models import Transaction
-from capital_gains_loss.transactions.forms import TransactionForm
+from capital_gains_loss.transactions.forms import TransactionForm, TransactionFormUpdate
 import datetime
 import requests
 import io
@@ -44,7 +44,7 @@ def update_transaction(transaction_id):
     transaction = Transaction.query.get_or_404(transaction_id)
     if transaction.author != current_user:
         abort(403)
-    form = TransactionForm()
+    form = TransactionFormUpdate()
     if form.validate_on_submit():
         transaction.security_name = form.security_name.data.upper()
         transaction.transaction_type = form.transaction_type.data
@@ -68,7 +68,6 @@ def update_transaction(transaction_id):
         form.fees.data = transaction.fees
         form.forex_rate.data = transaction.forex_rate
         form.transaction_date.data = datetime.datetime.strftime(transaction.transaction_date, '%m/%d/%Y %I:%M %p')
-        form.submit.label.text = "Update Transaction"
         form.amount_recieved_details.data = transaction.amount_recieved_details
         form.amount_recieved.data = transaction.amount_recieved
     return render_template('create_transaction.html', title='Update Transaction',

@@ -16,6 +16,11 @@ def calculate_acb(symbol):
         else:
             previous_acb = previous_record.acb
 
+        #print("Debug: Processing Transaction : ", transaction)
+        #print("Debug: Previous ACB : ", previous_acb)
+        #print("Debug: Total Shares : ", total_shares)
+        #print("Debug: Transaction quantity : ", transaction.quantity)
+        #print("Debug: Transaction ID : ", transaction.id)
         if transaction.transaction_type.lower() == "buy":
             #BUY Transaction
             if transaction.forex_rate != Decimal(0):
@@ -28,6 +33,7 @@ def calculate_acb(symbol):
             transaction.amount_in_cad = amount_in_cad
             transaction.acb_change = transaction.acb - previous_acb
             total_shares = total_shares + transaction.quantity
+            transaction.total_shares = total_shares
         else:
             #SELL Transaction
             acb_sell = ((previous_acb /total_shares) * transaction.quantity)
@@ -45,6 +51,7 @@ def calculate_acb(symbol):
             transaction.amount_in_cad = amount_in_cad
             transaction.acb_change = transaction.acb - previous_acb
             total_shares = total_shares - transaction.quantity
+            transaction.total_shares = total_shares
 
         db.session.commit()
         previous_record = transaction

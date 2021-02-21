@@ -42,6 +42,7 @@ class Transaction(db.Model):
     transaction_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     transaction_type = db.Column(db.String(20), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
+    total_shares = db.Column(db.Integer, nullable=True)
     price_per_share = db.Column(db.Numeric(10,2), nullable=False)
     fees = db.Column(db.Numeric(10,2), nullable=True, default=0.0)
     forex_rate = db.Column(db.Numeric(10,4), nullable=True, default=0.0)
