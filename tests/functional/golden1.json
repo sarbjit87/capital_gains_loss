@@ -20,8 +20,8 @@
     "transaction_type": "buy"
   },
   "3": {
-    "acb": "2509.99",
-    "acb_change": "-2509.99",
+    "acb": "2510.00",
+    "acb_change": "-2510.00",
     "amount_in_cad": "6000.00",
     "author": "user2",
     "gain_loss": "3480.01",
@@ -30,7 +30,7 @@
     "transaction_type": "sell"
   },
   "4": {
-    "acb": "9019.99",
+    "acb": "9020.00",
     "acb_change": "6510.00",
     "amount_in_cad": "6500.00",
     "author": "user2",
@@ -40,7 +40,7 @@
     "transaction_type": "buy"
   },
   "5": {
-    "acb": "5411.99",
+    "acb": "5412.00",
     "acb_change": "-3608.00",
     "amount_in_cad": "3600.00",
     "author": "user2",

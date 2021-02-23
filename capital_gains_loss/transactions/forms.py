@@ -60,13 +60,14 @@ class TransactionForm(FlaskForm):
             return False
 
         last_transaction = Transaction.query.filter_by(security_name=self.security_name.data.upper(),author=current_user).order_by(Transaction.transaction_date.desc()).first()
-        print(last_transaction)
-        print(last_transaction.total_shares)
+        #print(last_transaction)
+        #print(last_transaction.total_shares)
         if self.transaction_type.data.lower() == "sell":
-            if self.quantity.data > last_transaction.total_shares:
-                msg = 'No Stock available to sell!'
-                self.transaction_type.errors.append(msg)
-            return False
+            if last_transaction is not None:
+                if self.quantity.data > last_transaction.total_shares:
+                    msg = 'No Stock available to sell!'
+                    self.transaction_type.errors.append(msg)
+                    return False
         return True
 
 
@@ -108,5 +109,5 @@ class TransactionFormUpdate(FlaskForm):
             if self.quantity.data >= total_shares:
                 msg = 'Cannot edit to sell transaction. This will lead to selling stocks which are not available (no corresponding buy transaction)!'
                 self.transaction_type.errors.append(msg)
-            return False
+                return False
         return True
