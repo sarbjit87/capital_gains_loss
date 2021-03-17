@@ -23,8 +23,7 @@ class Config:
 
 class TestConfig:
     SECRET_KEY = '13b8184b924cf6f8e31fdf3fdssdd3725' #secrets.token_hex(16)
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'testapp.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'testapp.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 587
